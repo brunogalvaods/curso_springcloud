@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/itemsharingdatabase
+    username: root
+    password: root
+security:
+  basic:
+    enabled: false
+server:
+  port: 8082
