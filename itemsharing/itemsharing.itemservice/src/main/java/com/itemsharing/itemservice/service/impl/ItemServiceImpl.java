@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itemsharing.itemservice.client.UserFeignClient;
+import com.itemsharing.itemservice.client.UserRestTemplateClient;
 import com.itemsharing.itemservice.model.Item;
 import com.itemsharing.itemservice.model.User;
 import com.itemsharing.itemservice.repository.ItemRepository;
@@ -33,6 +34,9 @@ public class ItemServiceImpl implements ItemService {
 	
 	@Autowired
 	private UserFeignClient userFeignClient;
+	
+	@Autowired
+	private UserRestTemplateClient userRestTemplateClient;
 	
 	@Override
 	public Item addItemByUser(Item item, String username) {
@@ -105,7 +109,9 @@ public class ItemServiceImpl implements ItemService {
 		
 		LOG.debug("ItemService.getUserByUsername Correlation ID: {}", UserContextHolder.getContext().getCorrelationId());
 		
-		return userFeignClient.getUserByUsername(username);
+		/*return userFeignClient.getUserByUsername(username);*/
+		
+		return userRestTemplateClient.getUser(username);
 	}
 
 	private void randomlyRunLong() {

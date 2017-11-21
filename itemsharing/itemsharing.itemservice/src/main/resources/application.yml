@@ -12,8 +12,11 @@ spring:
     name: itemservice
 
 security:
-  basic:
-    enabled: false
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8901/user
+    client:
+      client-id: webclient
 
 server:
   port: 8082
