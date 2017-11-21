@@ -27,3 +27,6 @@ eureka:
     fetch-registry: true
     service-url:
       default-zone: http://localhost:8761/eureka/
+      
+signing:
+  key: 345345fdgdsf5345
