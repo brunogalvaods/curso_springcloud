@@ -12,8 +12,9 @@ spring:
     name: userservice
 
 security:
-  basic:
-    enabled: false
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8901/user
 
 server:
   port: 8081
@@ -26,3 +27,6 @@ eureka:
     fetch-registry: true
     service-url:
       default-zone: http://localhost:8761/eureka/
+
+signing:
+  key: 345345fdgdsf5345
