@@ -10,6 +10,8 @@ spring:
     password: root
   application:
     name: userservice
+  zipkin:
+    base-url: http://localhost:9411
 
 security:
   oauth2:
@@ -30,3 +32,9 @@ eureka:
 
 signing:
   key: 345345fdgdsf5345
+
+logging:
+  level:
+    com.netflix: WARN
+    org.springframework.web: WARN
+    com.itemsharing: DEBUG
