@@ -3,7 +3,6 @@ package com.itemsharing.itemservice.service.impl;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itemsharing.itemservice.client.UserFeignClient;
-import com.itemsharing.itemservice.client.UserRestTemplateClient;
 import com.itemsharing.itemservice.model.Item;
 import com.itemsharing.itemservice.model.User;
 import com.itemsharing.itemservice.repository.ItemRepository;
@@ -34,9 +32,6 @@ public class ItemServiceImpl implements ItemService {
 	
 	@Autowired
 	private UserFeignClient userFeignClient;
-	
-	@Autowired
-	private UserRestTemplateClient userRestTemplateClient;
 	
 	@Override
 	public Item addItemByUser(Item item, String username) {
@@ -103,31 +98,12 @@ public class ItemServiceImpl implements ItemService {
 			}
 	)
 	public User getUserByUsername(String username) {
-		/*return userService.findByUsername(username);*/
-		
-		/*randomlyRunLong();*/
-		
 		LOG.debug("ItemService.getUserByUsername Correlation ID: {}", UserContextHolder.getContext().getCorrelationId());
 		
-		/*return userFeignClient.getUserByUsername(username);*/
-		
-		return userRestTemplateClient.getUser(username);
-	}
-
-	private void randomlyRunLong() {
-		Random rand = new Random();
-		int randomNum = rand.nextInt((3-1)+1)+1;
-		if(randomNum == 3) sleep();
+		return userFeignClient.getUserByUsername(username);
 	}
 	
-	private void sleep() {
-		try {
-			Thread.sleep(11000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-	
+	@SuppressWarnings("unused")
 	private User buildFallbackUser(String username) {
 		User user = new User();
 		user.setId(123123L);
