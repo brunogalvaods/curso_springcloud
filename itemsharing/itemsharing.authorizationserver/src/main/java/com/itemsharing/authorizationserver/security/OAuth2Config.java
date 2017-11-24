@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 
 @Configuration
 public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
@@ -23,11 +24,17 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 		       .withClient("clientapp")
 		       .secret("password")
 		       .authorizedGrantTypes("refresh_token", "password", "client_credentials")
-		       .scopes("webclient", "mobileclient");
+		       .scopes("webclient", "mobileclient")
+		       .accessTokenValiditySeconds(3600);
 	}
 	
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints.authenticationManager(authenticationManager).userDetailsService(userDetailsService);
 	}
+	
+	@Override
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+        oauthServer.tokenKeyAccess("isAnonymous() || permitAll()").checkTokenAccess("permitAll()");
+    }
 }

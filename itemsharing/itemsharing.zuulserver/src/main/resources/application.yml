@@ -25,11 +25,25 @@ eureka:
 
 zuul:
   routes:
+    authorizationservice:
+      path: /oauth/**
+      url: http://localhost:8901/oauth
     userservice: /user/**
     itemservice: /item/**
   ignored-services: '*'
   prefix: /api
   sensitive-headers: Cookie, Set-Cookie
+  host:
+    connect-timeout-millis: 12000
+    socket-timeout-millis: 12000
+
+hystrix:
+    command:
+        default:
+            execution:
+                isolation:
+                    thread:
+                        timeoutInMilliseconds: 10000
 
 logging:
   level:
